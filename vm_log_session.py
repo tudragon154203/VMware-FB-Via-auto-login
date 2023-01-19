@@ -15,7 +15,8 @@ class VMLogSession:
 
     """ a log in and out session of a VirtualMachine. Attributes:
     + virtual_machine: a VirtualMachine instance
-    + t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook. Default to 180.
+    + t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook.
+    Through experment, it takes 50s to complete, so set default = 60 for some room
     + status: an enum of READY, RUNNING, WAITING, COMPLETED, ERROR, similar to the processes of tasks in an OS
     + created_at: time this session has been created
     + completed_at: : time this session has been completed
@@ -27,7 +28,7 @@ class VMLogSession:
     + _start_vm(): start the virtual machine, using vmrun bash script
     + _wait(): wait for t_running seconds
     + _stop_vm(): stop the virtual machine, also use vmrun"""
-    def __init__(self, virtual_machine, t_running=180):
+    def __init__(self, virtual_machine, t_running=60):
         self.virtual_machine = virtual_machine
         self.t_running = t_running
         self.status = self.Status.READY
@@ -47,6 +48,7 @@ class VMLogSession:
     def _start_vm(self):
         # Code to start the virtual machine
         vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path)
+        print(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
         self.status = self.Status.RUNNING
@@ -59,6 +61,7 @@ class VMLogSession:
     def _stop_vm(self):
         # Code to stop the virtual machine
         vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path)
+        print(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
         self.status = self.Status.COMPLETED
@@ -76,6 +79,6 @@ class VMLogSession:
 
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")
-    print(vm.vmx_file_path)
-    vm_log_session = VMLogSession(vm, t_running=1)
+    # print(vm.vmx_file_path)
+    vm_log_session = VMLogSession(vm)
     vm_log_session.run()
