@@ -14,12 +14,12 @@ class VMLogSession:
         ERROR = "error"
 
     """ a log in and out session of a VirtualMachine. Attributes:
-    + virtual_machine: a VirtualMachine instance
-    + t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook.
+    :param virtual_machine: a VirtualMachine instance
+    :param t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook.
     Through experment, it takes 50s to complete, so set default = 60 for some room
-    + status: an enum of READY, RUNNING, WAITING, COMPLETED, ERROR, similar to the processes of tasks in an OS
-    + created_at: time this session has been created
-    + completed_at: : time this session has been completed
+    :attr status: an enum of READY, RUNNING, WAITING, COMPLETED, ERROR, similar to the processes of tasks in an OS
+    :attr created_at: time this session has been created
+    :attr completed_at: : time this session has been completed
 
     Method:
     + run(): 
