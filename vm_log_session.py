@@ -48,11 +48,11 @@ class VMLogSession:
     def _start_vm(self):
         # Code to start the virtual machine
         vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path)
-        print(vmrun_start_command)
+        # print(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
         self.status = self.Status.RUNNING
-        print(f'{self.virtual_machine.name} has started')
+        print(f'{self.virtual_machine.name} has started at {time.time()}')
         
 
     def _wait(self):
@@ -61,11 +61,11 @@ class VMLogSession:
     def _stop_vm(self):
         # Code to stop the virtual machine
         vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path)
-        print(vmrun_stop_command)
+        # print(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
         self.status = self.Status.COMPLETED
-        print(f'{self.virtual_machine.name} has stopped')
+        print(f'{self.virtual_machine.name} has stopped at {time.time()}')
 
     # Getters
     def get_status(self):
