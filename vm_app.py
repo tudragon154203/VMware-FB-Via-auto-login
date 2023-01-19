@@ -48,7 +48,7 @@ class VMApp:
         """
         scan all .vmx file in vm_root_dir recursively, 
         look for those containing self.keyword. 
-        Return list of absolute paths of .vmx files
+        Return list of absolute paths of .vmx files (unsorted)
         """
         vmx_paths = []
         for root, dirs, files in os.walk(self.vm_root_dir):
@@ -64,10 +64,10 @@ class VMApp:
     def _create_sessions(self, vmx_paths):
         """
         from list of .vmx files, create VMLogSession instances and put them in a list. 
-        Return list of VMLogSession
+        Return list of VMLogSession (sorted a-z by path)
         """
         vm_log_sessions = []
-        for path in vmx_paths:
+        for path in sorted(vmx_paths):
             vm_name = path.split("/")[-1]
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
             log_session = VMLogSession(virtual_machine=vm)
@@ -86,5 +86,5 @@ class VMApp:
         return completed_sessions
 
 if __name__ == "__main__":
-    vm_app = VMApp("..")
+    vm_app = VMApp(vm_root_dir = "..")
     vm_app.run()
