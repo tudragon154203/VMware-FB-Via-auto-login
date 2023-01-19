@@ -35,6 +35,7 @@ class VMApp:
         For each VMLogSession instance, call its run() method, 
         wait for t_between_sessions seconds and call run() of the next one.
         """
+        print(time.time())
         vmx_paths = self._scan()
         self.vm_log_sessions = self._create_sessions(vmx_paths)
         length = len(self.vm_log_sessions)
