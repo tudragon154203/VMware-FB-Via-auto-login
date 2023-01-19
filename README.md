@@ -2,6 +2,8 @@ Program to open and close Virtual Machines (VMs)
 
 Programming language: Python
 
+Quickstart: python3 vm_app.py 
+
 Steps:
 1. Scan all machines in folder .., create a list
 For each machine:
