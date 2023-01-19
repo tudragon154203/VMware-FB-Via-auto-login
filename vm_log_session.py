@@ -52,7 +52,7 @@ class VMLogSession:
         subprocess.run(vmrun_start_command, shell=True)
 
         self.status = self.Status.RUNNING
-        print(f'{self.virtual_machine.name} has started at {time.time()}')
+        print(f'{self.virtual_machine.name} has started at {time.asctime( time.localtime(time.time()) )}')
         
 
     def _wait(self):
@@ -65,7 +65,7 @@ class VMLogSession:
         subprocess.run(vmrun_stop_command, shell=True)
 
         self.status = self.Status.COMPLETED
-        print(f'{self.virtual_machine.name} has stopped at {time.time()}')
+        print(f'{self.virtual_machine.name} has stopped at {time.asctime( time.localtime(time.time()) )}')
 
     # Getters
     def get_status(self):
