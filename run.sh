@@ -1,3 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Add this into crontab -e
 cd ~/SSD/VMware\ machines/src 
-python3 vm_app.py >> ~/SSD/VMware\ machines/log.txt
+vmware -n &
+python3 vm_app.py 
+#echo $PATH > log_path.txt
+
+

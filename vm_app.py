@@ -2,16 +2,18 @@ import os
 import time
 from virtual_machine import VirtualMachine
 from vm_log_session import VMLogSession
+from logger import Logger 
 
 class VMApp:
     """
     Initialize VMApp class with vm_root_dir, keyword and t_between_sessions
     :param vm_root_dir: root directory of all vmware instances
     :param keyword: search for 'keyword' in all VM's names and only run these VMs
-    :param t_between_sessions: time in seconds between two machine sessions. default to 90s 
+    :param t_between_sessions: time in seconds between two machine sessions. default to 5s
     Should be greater thatn VMLogSession.t_running to avoid CPU overload
 
     :attr vm_log_sessions - list of log sessions
+    :attr logger - log messages into "../log
 
 
     Method:
@@ -22,11 +24,12 @@ class VMApp:
     + _scan(): scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword. Return list of absolute paths of .vmx files
     + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
     """
-    def __init__(self, vm_root_dir, keyword = "ads", t_between_sessions=90):
+    def __init__(self, vm_root_dir, keyword = "ads", t_between_sessions=5):
         self.vm_root_dir = vm_root_dir
         self.keyword = keyword
         self.t_between_sessions = t_between_sessions
         self.vm_log_sessions = []
+        self.logger = Logger(__name__)
 
     def run(self):
         """
@@ -35,7 +38,7 @@ class VMApp:
         For each VMLogSession instance, call its run() method, 
         wait for t_between_sessions seconds and call run() of the next one.
         """
-        print(time.asctime( time.localtime(time.time()) ))
+        self.logger.log("New VMApp instance started")
         vmx_paths = self._scan()
         self.vm_log_sessions = self._create_sessions(vmx_paths)
         length = len(self.vm_log_sessions)
@@ -43,7 +46,7 @@ class VMApp:
         for session in self.vm_log_sessions:
             session.run()
             time.sleep(self.t_between_sessions)
-            print(f"{self.get_progress()}/{length} sessions completed")
+            self.logger.log(f"{self.get_progress()}/{length} sessions completed")
 
     def _scan(self):
         """

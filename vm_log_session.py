@@ -3,6 +3,7 @@ from virtual_machine import VirtualMachine
 import time
 import subprocess
 import shlex
+from logger import Logger 
 
 class VMLogSession:
 
@@ -17,9 +18,11 @@ class VMLogSession:
     :param virtual_machine: a VirtualMachine instance
     :param t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook.
     Through experment, it takes 50s to complete, so set default = 60 for some room
+
     :attr status: an enum of READY, RUNNING, WAITING, COMPLETED, ERROR, similar to the processes of tasks in an OS
     :attr created_at: time this session has been created
     :attr completed_at: : time this session has been completed
+    :attr logger
 
     Method:
     + run(): 
@@ -34,6 +37,7 @@ class VMLogSession:
         self.status = self.Status.READY
         self.created_at = time.time()
         self.completed_at = None
+        self.logger = Logger(__name__)
 
     def run(self):
         try:
@@ -47,12 +51,12 @@ class VMLogSession:
 
     def _start_vm(self):
         # Code to start the virtual machine
-        vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) + " nogui"
-        print(vmrun_start_command)
+        vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) #+ " nogui"
+        self.logger.log(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
         self.status = self.Status.RUNNING
-        print(f'{self.virtual_machine.name} has started at {time.asctime( time.localtime(time.time()) )}')
+        self.logger.log(f'{self.virtual_machine.name} has started')
         
 
     def _wait(self):
@@ -60,12 +64,12 @@ class VMLogSession:
 
     def _stop_vm(self):
         # Code to stop the virtual machine
-        vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) + " nogui"
-        print(vmrun_stop_command)
+        vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) #+ " nogui"
+        self.logger.log(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
         self.status = self.Status.COMPLETED
-        print(f'{self.virtual_machine.name} has stopped at {time.asctime( time.localtime(time.time()) )}')
+        self.logger.log(f'{self.virtual_machine.name} has stopped')
 
     # Getters
     def get_status(self):
@@ -79,6 +83,6 @@ class VMLogSession:
 
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")
-    # print(vm.vmx_file_path)
+    # self.logger.log(vm.vmx_file_path)
     vm_log_session = VMLogSession(vm)
     vm_log_session.run()
