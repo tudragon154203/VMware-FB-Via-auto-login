@@ -1,6 +1,15 @@
 import logging
 
 class Logger:
+    """Singleton design pattern to avoid Logger duplication"""
+    _instance = None
+    
+    @classmethod
+    def instance(cls, name = "", file_name='../log.txt'):
+        if cls._instance is None:
+            cls._instance = Logger(name, file_name)
+        return cls._instance
+
     def __init__(self, name, file_name='../log.txt'):
         # Create a logger with the given name
         self.logger = logging.getLogger(name)

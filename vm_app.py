@@ -29,7 +29,7 @@ class VMApp:
         self.keyword = keyword
         self.t_between_sessions = t_between_sessions
         self.vm_log_sessions = []
-        self.logger = Logger(__name__)
+        self.logger = Logger.instance(__name__)
 
     def run(self):
         """

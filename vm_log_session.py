@@ -37,7 +37,7 @@ class VMLogSession:
         self.status = self.Status.READY
         self.created_at = time.time()
         self.completed_at = None
-        self.logger = Logger(__name__)
+        self.logger = Logger.instance()
 
     def run(self):
         try:
