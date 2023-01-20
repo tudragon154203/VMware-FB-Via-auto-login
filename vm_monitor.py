@@ -1,0 +1,31 @@
+import subprocess
+
+from virtual_machine import VirtualMachine
+
+class VMMonitor:
+    """Helper functions to monitor VMs"""
+
+    @staticmethod
+    def _get_running_vmx_paths():
+        """
+        Get the paths of running .vmx files using the "vmrun list" command in a subprocess
+        :return: list of paths of running .vmx files
+        """
+        vmrun_list = subprocess.run(["vmrun", "list"], stdout=subprocess.PIPE, universal_newlines=True)
+        vmx_paths = [path for path in vmrun_list.stdout.split("\n") if path.endswith(".vmx")]
+        return vmx_paths
+
+    @staticmethod
+    def is_running(virtual_machine):
+        """
+        Check if the given VirtualMachine instance is running
+        :param virtual_machine: VirtualMachine instance
+        :return: True if the VirtualMachine is running, False otherwise
+        """
+        running_vmx_paths = VMMonitor._get_running_vmx_paths()
+        return virtual_machine.vmx_file_path in running_vmx_paths
+
+if __name__ == "__main__":
+    vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")
+    is_running = VMMonitor.is_running(vm)
+    print(is_running)

@@ -51,3 +51,8 @@ Private methods:
 + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
 
 d> VMAppService: create VMApp instances in a predefined schedule
+Deprecated, using cronjob of linux
+
+e> VMMonitor: monitoring VMs. No attribute.
+static method: get_running_vmx_paths(), return paths of running .vmx files using "vmrun list" command in a subprocesss
+public method: is_runnung(VirtualMachine), check if this virtual machine is running
