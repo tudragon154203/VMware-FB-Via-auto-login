@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Add this into crontab -e
+export PATH=/home/tudragon/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+export DISPLAY=":0.0"
+#source $HOME/.bash_profile
+
 cd ~/SSD/VMware\ machines/src 
-vmware -n &
+vmware &
 python3 vm_app.py 
-#echo $PATH > log_path.txt
 
 
