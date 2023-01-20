@@ -1,5 +1,5 @@
 import subprocess
-
+import time
 from virtual_machine import VirtualMachine
 
 class VMMonitor:
@@ -18,12 +18,16 @@ class VMMonitor:
     @staticmethod
     def is_running(virtual_machine):
         """
-        Check if the given VirtualMachine instance is running
+        Check if the given VirtualMachine instance is running.
+        Sleep 1: delay the execuion for vmrun commands to take effect
         :param virtual_machine: VirtualMachine instance
         :return: True if the VirtualMachine is running, False otherwise
         """
+        time.sleep(1)
         running_vmx_paths = VMMonitor._get_running_vmx_paths()
-        return virtual_machine.vmx_file_path in running_vmx_paths
+        vmx_name = virtual_machine.vmx_file_path.split("/")[-1]
+        joined_path = " ".join(running_vmx_paths)
+        return vmx_name in joined_path
 
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")

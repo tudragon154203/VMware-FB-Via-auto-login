@@ -1,5 +1,6 @@
 from enum import Enum
 from virtual_machine import VirtualMachine
+from vm_monitor import VMMonitor
 import time
 import subprocess
 import shlex
@@ -55,8 +56,12 @@ class VMLogSession:
         self.logger.log(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
-        self.status = self.Status.RUNNING
-        self.logger.log(f'{self.virtual_machine.name} has started')
+        if VMMonitor.is_running(self.virtual_machine):
+            self.status = self.Status.RUNNING
+            self.logger.log(f'{self.virtual_machine.name} has started successfully')
+        else:
+            self.status = self.Status.ERROR
+            self.logger.error(f'{self.virtual_machine.name} has failed to start')
         
 
     def _wait(self):
@@ -68,8 +73,12 @@ class VMLogSession:
         self.logger.log(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
-        self.status = self.Status.COMPLETED
-        self.logger.log(f'{self.virtual_machine.name} has stopped')
+        if not VMMonitor.is_running(self.virtual_machine):
+            self.status = self.Status.COMPLETED
+            self.logger.log(f'{self.virtual_machine.name} has stopped successfully')
+        else:
+            self.status = self.Status.ERROR
+            self.logger.error(f'{self.virtual_machine.name} has failed to stop')
 
     # Getters
     def get_status(self):
