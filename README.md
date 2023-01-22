@@ -56,3 +56,10 @@ Deprecated, using cronjob of linux
 e> VMMonitor: monitoring VMs. No attribute.
 static method: get_running_vmx_paths(), return paths of running .vmx files using "vmrun list" command in a subprocesss
 public method: is_runnung(VirtualMachine), check if this virtual machine is running
+
+f> Config: a python configuration class that uses json library
+Data to save:
++ t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook. Default to 60.
++ t_between_sessions: time in seconds between two machine sessions. Default to 5.
++ log_path: output logging path. Default to "../log.txt"
+
