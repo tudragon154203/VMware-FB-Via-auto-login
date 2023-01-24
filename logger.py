@@ -1,7 +1,8 @@
 import logging
 
 class Logger:
-    """Singleton design pattern to avoid Logger duplication"""
+    """ Logger: wrapper for logging buil-in Python lib
+    Singleton design pattern to avoid Logger duplication"""
     _instance = None
     
     @classmethod
