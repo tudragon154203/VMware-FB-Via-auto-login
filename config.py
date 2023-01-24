@@ -2,6 +2,9 @@ import json
 from collections import UserDict
 
 class Config(UserDict):
+    """ A dictionary used for configuration
+    Has save_config and load_config method
+    """
     def __init__(self, vm_root_dir="..", keyword="ads", 
     t_running=60, t_between_sessions=5, 
     log_path="../log.txt"):
