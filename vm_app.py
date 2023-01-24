@@ -1,5 +1,6 @@
 import os
 import time
+from config import Config
 from virtual_machine import VirtualMachine
 from vm_log_session import VMLogSession
 from logger import Logger 
@@ -7,6 +8,7 @@ from logger import Logger
 class VMApp:
     """
     Initialize VMApp class with vm_root_dir, keyword and t_between_sessions
+    In self.config:
     :param vm_root_dir: root directory of all vmware instances
     :param keyword: search for 'keyword' in all VM's names and only run these VMs
     :param t_between_sessions: time in seconds between two machine sessions. default to 5s
@@ -24,12 +26,14 @@ class VMApp:
     + _scan(): scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword. Return list of absolute paths of .vmx files
     + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
     """
-    def __init__(self, vm_root_dir, keyword = "ads", t_between_sessions=5):
-        self.vm_root_dir = vm_root_dir
-        self.keyword = keyword
-        self.t_between_sessions = t_between_sessions
+    def __init__(self, config):
+        self.vm_root_dir = config["vm_root_dir"]
+        self.keyword = config["keyword"]
+        self.t_between_sessions = config["t_between_sessions"]
+        self.t_running = config["t_running"]
         self.vm_log_sessions = []
-        self.logger = Logger.instance(__name__)
+        self.logger = Logger.instance(__name__, config["log_path"])
+        config.save_config()
 
     def run(self):
         """
@@ -74,7 +78,7 @@ class VMApp:
         for path in sorted(vmx_paths):
             vm_name = path.split("/")[-1]
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
-            log_session = VMLogSession(virtual_machine=vm)
+            log_session = VMLogSession(virtual_machine=vm, t_running = self.t_running)
             vm_log_sessions.append(log_session)
         return vm_log_sessions
 
@@ -90,5 +94,7 @@ class VMApp:
         return completed_sessions
 
 if __name__ == "__main__":
-    vm_app = VMApp(vm_root_dir = "..")
+    config = Config()
+    config.load_config("config.json")
+    vm_app = VMApp(config)
     vm_app.run()
