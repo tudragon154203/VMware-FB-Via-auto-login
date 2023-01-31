@@ -4,6 +4,8 @@ from config import Config
 from virtual_machine import VirtualMachine
 from vm_log_session import VMLogSession
 from logger import Logger 
+import sys
+import argparse
 
 class VMApp:
     """
@@ -93,8 +95,15 @@ class VMApp:
                 completed_sessions += 1
         return completed_sessions
 
+# Parser: Have one argument: config path
+parser = argparse.ArgumentParser()
+parser.add_argument("-p", "--path", help="configuration file path. Default to ./config.json",
+                            default="config.json")
+args = parser.parse_args()
+
 if __name__ == "__main__":
-    config = Config()
-    config.load_config("config.json")
+    file_path = args.path 
+    config = Config(file_path=file_path)
+    config.load_config(file_path)
     vm_app = VMApp(config)
     vm_app.run()
