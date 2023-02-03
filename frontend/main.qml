@@ -1,12 +1,12 @@
 // main.qml
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("VMware Via Auto Log-in")
 
     Column {
         TextField {

@@ -1,12 +1,18 @@
 # main.py
 import sys
-from PySide2.QtCore import QUrl
-from PySide2.QtGui import QGuiApplication
-from PySide2.QtQml import QQmlApplicationEngine
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtQml import QQmlApplicationEngine
 
-app = QGuiApplication(sys.argv)
-engine = QQmlApplicationEngine()
+if __name__ == "__main__":
+    app = QGuiApplication(sys.argv)
+    engine = QQmlApplicationEngine()
 
-engine.load(QUrl.fromLocalFile('main.qml'))
+    engine.load(QUrl.fromLocalFile('main.qml'))
+    if not engine.rootContext():
+        sys.exit(-1)
 
-sys.exit(app.exec_())
+    try:
+        sys.exit(app.exec_())
+    except:
+        pass
