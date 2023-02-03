@@ -1,5 +1,5 @@
 # backend.py
-from PySide2.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal
 
 class Backend(QObject):
     configFileChanged = Signal(str)

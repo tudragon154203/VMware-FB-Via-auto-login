@@ -9,7 +9,7 @@ if __name__ == "__main__":
     engine = QQmlApplicationEngine()
 
     engine.load(QUrl.fromLocalFile('main.qml'))
-    if not engine.rootContext():
+    if not engine.rootObjects():
         sys.exit(-1)
 
     try:
