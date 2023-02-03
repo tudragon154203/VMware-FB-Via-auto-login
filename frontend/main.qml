@@ -14,7 +14,7 @@ ApplicationWindow {
         TextField {
             id: configFileField
             text: backend.config_file
-            height: 30
+            height: 80
             placeholderText: "Enter config file path"
         }
         Button {
@@ -25,7 +25,7 @@ ApplicationWindow {
                 color: "green"
             }
             onClicked: backend.run_program()
-
+            // onClicked: console.log("Running program")
         }
     }
 
