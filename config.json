@@ -1,1 +1,1 @@
-{"vm_root_dir": "..", "keyword": "ads", "t_running": 3, "t_between_sessions": 3, "log_path": "../log.txt"}
+{"vm_root_dir": "../..", "keyword": "ads", "t_running": 3, "t_between_sessions": 3, "log_path": "../../log.txt"}
