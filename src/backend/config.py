@@ -34,8 +34,8 @@ class Config(UserDict):
             file_path = pathlib.Path(file_path)
 
         data = self.data
-        data["vm_root_dir"] = str(self.data["vm_root_dir"])
-        data["log_path"] = str(self.data["log_path"])
+        data["vm_root_dir"] = str(self.data["vm_root_dir"].as_posix())
+        data["log_path"] = str(self.data["log_path"].as_posix())
         with open(file_path, "w") as f:
             json.dump(data, f)
             print(f'Config saved to {file_path}')
