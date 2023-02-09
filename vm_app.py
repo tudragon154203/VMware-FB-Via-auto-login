@@ -4,7 +4,6 @@ from config import Config
 from virtual_machine import VirtualMachine
 from vm_log_session import VMLogSession
 from logger import Logger 
-import sys
 import argparse
 
 class VMApp:
@@ -102,8 +101,8 @@ parser.add_argument("-p", "--path", help="configuration file path. Default to ./
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    file_path = args.path 
+    file_path = args.path
     config = Config(file_path=file_path)
     config.load_config(file_path)
     vm_app = VMApp(config)
-    vm_app.run()
+    # vm_app.run()
