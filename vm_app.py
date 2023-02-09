@@ -44,6 +44,7 @@ class VMApp:
         """
         self.logger.log("New VMApp instance started")
         vmx_paths = self._scan()
+        print("Found virtual machine paths:", vmx_paths)
         self.vm_log_sessions = self._create_sessions(vmx_paths)
         length = len(self.vm_log_sessions)
 
@@ -52,6 +53,23 @@ class VMApp:
             time.sleep(self.t_between_sessions)
             self.logger.log(f"{self.get_progress()}/{length} sessions completed")
 
+    # def _scan(self):
+    #     """
+    #     scan all .vmx file in vm_root_dir recursively, 
+    #     look for those containing self.keyword. 
+    #     Return list of absolute paths of .vmx files (unsorted)
+    #     """
+    #     vmx_paths = []
+    #     for root, dirs, files in os.walk(self.vm_root_dir):
+    #         for file in files:
+    #             if file.endswith(".vmx"):
+    #                 path = os.path.join(root, file)
+    #                 with open(path, "r") as f:
+    #                     for line in f:
+    #                         if "displayName" in line and self.keyword in line:
+    #                             vmx_paths.append(path)
+    #     return vmx_paths
+    
     def _scan(self):
         """
         scan all .vmx file in vm_root_dir recursively, 
@@ -59,14 +77,9 @@ class VMApp:
         Return list of absolute paths of .vmx files (unsorted)
         """
         vmx_paths = []
-        for root, dirs, files in os.walk(self.vm_root_dir):
-            for file in files:
-                if file.endswith(".vmx"):
-                    path = os.path.join(root, file)
-                    with open(path, "r") as f:
-                        for line in f:
-                            if "displayName" in line and self.keyword in line:
-                                vmx_paths.append(path)
+        for p in self.vm_root_dir.rglob("*"):
+            if p.is_file() and p.suffix == ".vmx" and self.keyword in str(p):
+                vmx_paths.append(p)
         return vmx_paths
 
     def _create_sessions(self, vmx_paths):
@@ -76,7 +89,8 @@ class VMApp:
         """
         vm_log_sessions = []
         for path in sorted(vmx_paths):
-            vm_name = path.split("/")[-1]
+            # vm_name = path.split("/")[-1]
+            vm_name = path.stem
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
             log_session = VMLogSession(virtual_machine=vm, t_running = self.t_running)
             vm_log_sessions.append(log_session)
@@ -104,4 +118,4 @@ if __name__ == "__main__":
     config = Config(file_path=file_path)
     config.load_config(file_path)
     vm_app = VMApp(config)
-    # vm_app.run()
+    vm_app.run()

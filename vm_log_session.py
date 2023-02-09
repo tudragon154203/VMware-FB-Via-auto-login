@@ -52,7 +52,9 @@ class VMLogSession:
 
     def _start_vm(self):
         # Code to start the virtual machine
-        vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        # vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        abs_path = self.virtual_machine.vmx_file_path.resolve()
+        vmrun_start_command = "vmrun start " +  '"' + str(abs_path) +  '"'
         self.logger.log(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
@@ -69,7 +71,9 @@ class VMLogSession:
 
     def _stop_vm(self):
         # Code to stop the virtual machine
-        vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        # vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        abs_path = self.virtual_machine.vmx_file_path.resolve()
+        vmrun_stop_command = "vmrun stop " +  '"' + str(abs_path) +  '"'
         self.logger.log(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 

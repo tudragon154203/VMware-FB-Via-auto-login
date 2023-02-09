@@ -25,7 +25,8 @@ class VMMonitor:
         """
         time.sleep(1)
         running_vmx_paths = VMMonitor._get_running_vmx_paths()
-        vmx_name = virtual_machine.vmx_file_path.split("/")[-1]
+        # vmx_name = virtual_machine.vmx_file_path.split("/")[-1]
+        vmx_name = virtual_machine.vmx_file_path.stem
         joined_path = " ".join(running_vmx_paths)
         return vmx_name in joined_path
 
