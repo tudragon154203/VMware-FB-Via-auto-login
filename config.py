@@ -33,8 +33,11 @@ class Config(UserDict):
         else:
             file_path = pathlib.Path(file_path)
 
+        data = self.data
+        data["vm_root_dir"] = str(self.data["vm_root_dir"])
+        data["log_path"] = str(self.data["log_path"])
         with open(file_path, "w") as f:
-            json.dump(self.data, f) #TODO: convert Path into PurePath again
+            json.dump(data, f)
             print(f'Config saved to {file_path}')
 
     
@@ -61,5 +64,4 @@ class Config(UserDict):
 if __name__ == "__main__":
     config = Config()
     config.load_config("config.json")
-    # config.save_config("config.json")
-    print(config["vm_root_dir"])
+    config.save_config("config.json")

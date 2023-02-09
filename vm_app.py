@@ -34,7 +34,6 @@ class VMApp:
         self.t_running = config["t_running"]
         self.vm_log_sessions = []
         self.logger = Logger.instance(__name__, config["log_path"])
-        config.save_config()
 
     def run(self):
         """
