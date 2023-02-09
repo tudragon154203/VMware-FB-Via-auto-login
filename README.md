@@ -81,7 +81,9 @@ Trong quá trình chạy, VMMonitor sẽ check xem máy ảo đã lên chưa. Tr
 
 ## Dành cho Dev
 
-Các bạn dev có thể fork repo này, hoặc tạo pull request nếu muốn đóng góp xây dựng tool hoàn thiện hơn
+Các bạn dev có thể fork repo này, hoặc tạo pull request nếu muốn đóng góp xây dựng tool hoàn thiện hơn.
+
+License: GPL-3.0 license, được tái sử dụng thoải mái cho mọi mục đích.
 
 Giải thích các lớp (class) mình đã để trong file "./Classes Diagram.md", và các phần code đã được comment khá đầy đủ
 
