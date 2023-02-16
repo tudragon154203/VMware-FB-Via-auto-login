@@ -1,10 +1,8 @@
-import os
 import time
 from config import Config
 from virtual_machine import VirtualMachine
 from vm_log_session import VMLogSession
 from logger import Logger 
-import argparse
 
 class VMApp:
     """
@@ -54,23 +52,6 @@ class VMApp:
             time.sleep(self.t_between_sessions)
             self.logger.log(f"{self.get_progress()}/{length} sessions completed")
 
-    # def _scan(self):
-    #     """
-    #     scan all .vmx file in vm_root_dir recursively, 
-    #     look for those containing self.keyword. 
-    #     Return list of absolute paths of .vmx files (unsorted)
-    #     """
-    #     vmx_paths = []
-    #     for root, dirs, files in os.walk(self.vm_root_dir):
-    #         for file in files:
-    #             if file.endswith(".vmx"):
-    #                 path = os.path.join(root, file)
-    #                 with open(path, "r") as f:
-    #                     for line in f:
-    #                         if "displayName" in line and self.keyword in line:
-    #                             vmx_paths.append(path)
-    #     return vmx_paths
-    
     def _scan(self):
         """
         scan all .vmx file in vm_root_dir recursively, 
@@ -108,14 +89,8 @@ class VMApp:
                 completed_sessions += 1
         return completed_sessions
 
-# Parser: Have one argument: config path
-parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--config-path", help="configuration file path. Default to ./config.json",
-                            default="config.json")
-args = parser.parse_args()
-
 if __name__ == "__main__":
-    config_file_path = args.config_path
+    config_file_path = "config.json"
     config = Config(file_path=config_file_path)
     config.load_config(config_file_path)
     vm_app = VMApp(config)
