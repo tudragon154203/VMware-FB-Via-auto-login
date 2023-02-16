@@ -110,13 +110,13 @@ class VMApp:
 
 # Parser: Have one argument: config path
 parser = argparse.ArgumentParser()
-parser.add_argument("-p", "--path", help="configuration file path. Default to ./config.json",
+parser.add_argument("-p", "--config-path", help="configuration file path. Default to ./config.json",
                             default="config.json")
 args = parser.parse_args()
 
 if __name__ == "__main__":
-    file_path = args.path
-    config = Config(file_path=file_path)
-    config.load_config(file_path)
+    config_file_path = args.config_path
+    config = Config(file_path=config_file_path)
+    config.load_config(config_file_path)
     vm_app = VMApp(config)
     vm_app.run()
