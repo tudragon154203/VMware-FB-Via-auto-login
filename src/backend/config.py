@@ -1,23 +1,55 @@
 import json
 from collections import UserDict
 import pathlib
+from logger import Logger 
 
 class Config(UserDict):
     """ A dictionary used for configuration
     Has save_config and load_config method
     """
     def __init__(self, vm_root_dir="..", keyword="ads", 
-    t_running=60, t_between_sessions=5, 
-    log_path="../log.txt", file_path = "config.json"):
+    t_running=75, t_between_sessions=5, 
+    log_path="../log.txt", 
+    days_between_screenshots = 1,
+    screenshot_enable = True,
+    screenshot_dir = "../screenshots",
+    file_path = "config.json",
+    guest_username = "ads",
+    guest_password = ""):
         """
-        Initialize Config class with default values for vm_root_dir, keyword, t_running, t_between_sessions and log_path
+        Initialize Config class with default values:
+        :param vm_root_dir: root directory of all vmware instances
+        :param keyword: search for 'keyword' in all VM's names and only run these VMs
+        :param t_running: time from starting to stopping the VM. Default to 75s
+        :param t_between_sessions: time in seconds between two machine sessions. default to 5s
+        ------------------
+        :param screenshot_enable: do you enable taking screenshot. Default to True
+        :param days_between_screenshots: time in seconds between two machine sessions. default to 1 (everyday)
+        :param screenshot_dir: output screenshot path. Default to "../screenshots"
+        :param guest_username: (optional) VM's login username. Needed for screen capturing or more comple functionalities
+        :param guest_password: (optional) VM's login password.
         """
         data = {
-            "vm_root_dir": pathlib.Path(vm_root_dir),
-            "keyword": keyword,
-            "t_running": t_running,
-            "t_between_sessions": t_between_sessions,
-            "log_path": pathlib.Path(log_path)
+            "vm_filter":{
+                "vm_root_dir": pathlib.Path(vm_root_dir),
+                "keyword": keyword
+            },
+            "runtime":{
+                "t_running": t_running,
+                "t_between_sessions": t_between_sessions
+            },
+            "monitor":{
+                "log_path": pathlib.Path(log_path),
+                "screenshot":{
+                    "enable": screenshot_enable,
+                    "days_between_screenshots": days_between_screenshots,
+                    "screenshot_dir": pathlib.Path(screenshot_dir)      
+                },
+                "guest_credentials":{
+                    "username": guest_username,
+                    "password": guest_password
+                }
+            }
         }
         self.file_path = pathlib.Path(file_path)
         super().__init__(data)
@@ -34,10 +66,13 @@ class Config(UserDict):
             file_path = pathlib.Path(file_path)
 
         data = self.data
-        data["vm_root_dir"] = str(self.data["vm_root_dir"].as_posix())
-        data["log_path"] = str(self.data["log_path"].as_posix())
+        data["vm_filter"]["vm_root_dir"] = str(self.data["vm_filter"]["vm_root_dir"].as_posix())
+        data["monitor"]["log_path"] = str(self.data["monitor"]["log_path"].as_posix())
+        data["monitor"]["screenshot"]["screenshot_dir"] = str(self.data["monitor"]["screenshot"]["screenshot_dir"].as_posix())
+
         with open(file_path, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f,
+                     sort_keys=False, indent=4)
             print(f'Config saved to {file_path}')
 
     
@@ -52,9 +87,10 @@ class Config(UserDict):
                 config_data = json.load(f)
                 self.data = config_data
 
-                # parse path using pathlib
-                self.data["vm_root_dir"] = pathlib.Path(config_data["vm_root_dir"])
-                self.data["log_path"] = pathlib.Path(config_data["log_path"])
+                # parse paths using pathlib
+                self.data["vm_filter"]["vm_root_dir"] = pathlib.Path(config_data["vm_filter"]["vm_root_dir"])
+                self.data["monitor"]["log_path"] = pathlib.Path(config_data["monitor"]["log_path"])
+                self.data["monitor"]["screenshot"]["screenshot_dir"] = pathlib.Path(config_data["monitor"]["screenshot"]["screenshot_dir"])
 
                 print(f'Config loaded: {config_data}')
         except: #No file_path
@@ -63,5 +99,7 @@ class Config(UserDict):
 
 if __name__ == "__main__":
     config = Config()
-    config.load_config("config.json")
-    config.save_config("config.json")
+    # config_file_path = "config.json"
+    config_file_path = "src/backend/config.json"
+    config.load_config(file_path = config_file_path)
+    config.save_config(file_path = config_file_path)

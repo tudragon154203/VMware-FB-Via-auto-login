@@ -1,0 +1,1 @@
+vmrun -T ws -gu "ads" -gp "" captureScreen "2023.02.01_ads_007.vmx" "../screenshots/007.png" 

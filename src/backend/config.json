@@ -1,1 +1,22 @@
-{"vm_root_dir": "../../..", "keyword": "_ads_", "t_running": 60, "t_between_sessions": 3, "log_path": "../../../log.txt"}
+{
+    "vm_filter": {
+        "keyword": "_ads_",
+        "vm_root_dir": "../../.."
+    },
+    "runtime": {
+        "t_between_sessions": 5,
+        "t_running": 75
+    },
+    "monitor": {
+        "log_path": "../../../log.txt",
+        "screenshot": {
+            "enable": true,
+            "days_between_screenshots": 1,
+            "screenshot_dir": "../../../screenshots"
+        },
+        "guest_credentials": {
+            "username": "ads",
+            "password": ""
+        }
+    }
+}
