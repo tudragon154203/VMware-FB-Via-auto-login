@@ -23,7 +23,7 @@ class VMApp:
     """
     def __init__(self, config):
         self.config = config
-        self.logger = Logger.instance(__name__, config["log_path"])
+        self.logger = Logger.instance(__name__, config["monitor"]["log_path"])
         self.vm_log_sessions = []
         config.save_config(config.file_path)
 
@@ -42,7 +42,7 @@ class VMApp:
 
         for session in self.vm_log_sessions:
             session.run()
-            time.sleep(self.config["t_between_sessions"])
+            time.sleep(self.config["runtime"]["t_between_sessions"])
             self.logger.log(f"{self.get_progress()}/{length} sessions completed")
 
     def _scan(self):
@@ -52,9 +52,9 @@ class VMApp:
         Return list of absolute paths of .vmx files (unsorted)
         """
         vmx_paths = []
-        vm_root_dir = pathlib.Path(self.config["vm_root_dir"])
+        vm_root_dir = pathlib.Path(self.config["vm_filter"]["vm_root_dir"])
         for p in vm_root_dir.rglob("*"):
-            if p.is_file() and p.suffix == ".vmx" and self.config["keyword"] in str(p):
+            if p.is_file() and p.suffix == ".vmx" and self.config["vm_filter"]["keyword"] in str(p):
                 vmx_paths.append(p)
         return vmx_paths
 
@@ -69,7 +69,7 @@ class VMApp:
             vm_name = path.stem
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
             log_session = VMLogSession(virtual_machine=vm, 
-                                       t_running = self.config["t_running"], take_screenshot=True) 
+                                       t_running = self.config["runtime"]["t_running"], take_screenshot=True) 
             #TODO: take screenshot based on calculation whether to take it
             vm_log_sessions.append(log_session)
         return vm_log_sessions
@@ -80,7 +80,7 @@ class VMApp:
         :return: number of completed sessions
         """
         completed_sessions = 0
-        for session in self.config["vm_log_sessions"]:
+        for session in self.vm_log_sessions:
             if session.status == VMLogSession.Status.COMPLETED:
                 completed_sessions += 1
         return completed_sessions

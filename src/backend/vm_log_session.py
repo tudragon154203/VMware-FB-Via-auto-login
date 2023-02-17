@@ -94,6 +94,7 @@ class VMLogSession:
         username = self.config["monitor"]["guest_credentials"]["username"]
         password = self.config["monitor"]["guest_credentials"]["password"]
         output_img_path = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) / self.virtual_machine.get_name()
+        output_img_path = str(output_img_path)
         vmrun_capturescreen_command = f"vmrun -T ws -gu {username} -gp {password} captureScreen {abs_path} {output_img_path}"
         print("output_img_path", output_img_path)
         print("vmrun_capturescreen_command", vmrun_capturescreen_command)
