@@ -12,6 +12,10 @@
         "screenshot": {
             "days_between_screenshots": 1,
             "screenshot_dir": "../../../screenshots"
+        },
+        "guest_credentials": {
+            "username": "ads",
+            "password": ""
         }
     }
 }

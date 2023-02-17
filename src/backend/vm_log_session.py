@@ -3,7 +3,7 @@ from virtual_machine import VirtualMachine
 from vm_monitor import VMMonitor
 import time
 import subprocess
-import shlex
+import pathlib
 from logger import Logger 
 
 class VMLogSession:
@@ -91,7 +91,12 @@ class VMLogSession:
     def _take_screenshot(self):
         print("Taking screenshot...")
         abs_path = self.get_vm_abs_path()
-        vmrun_capturescreen_command = "vmrun captureScreen " +  '"' + abs_path +  '"'
+        username = self.config["monitor"]["guest_credentials"]["username"]
+        password = self.config["monitor"]["guest_credentials"]["password"]
+        output_img_path = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) / self.virtual_machine.get_name()
+        vmrun_capturescreen_command = f"vmrun -T ws -gu {username} -gp {password} captureScreen {abs_path} {output_img_path}"
+        print("output_img_path", output_img_path)
+        print("vmrun_capturescreen_command", vmrun_capturescreen_command)
         self.logger.log(vmrun_capturescreen_command)
         subprocess.run(vmrun_capturescreen_command, shell=True)
 
