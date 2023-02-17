@@ -1,1 +1,17 @@
-{"vm_filter": {"vm_root_dir": "../../..", "keyword": "_ads_"}, "runtime": {"t_running": 60, "t_between_sessions": 3}, "monitor": {"log_path": "../../../log.txt", "screenshot": {"days_between_screenshots": 3, "screenshot_dir": "../../../screenshots"}}}
+{
+    "vm_filter": {
+        "keyword": "_ads_",
+        "vm_root_dir": "../../.."
+    },
+    "runtime": {
+        "t_between_sessions": 3,
+        "t_running": 60
+    },
+    "monitor": {
+        "log_path": "../../../log.txt",
+        "screenshot": {
+            "days_between_screenshots": 1,
+            "screenshot_dir": "../../../screenshots"
+        }
+    }
+}

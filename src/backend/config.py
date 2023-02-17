@@ -10,6 +10,7 @@ class Config(UserDict):
     t_running=60, t_between_sessions=5, 
     log_path="../log.txt", 
     days_between_screenshots = 3,
+    screenshot_enable = True,
     screenshot_dir = "../screenshots",
     file_path = "config.json"):
         """
@@ -17,7 +18,7 @@ class Config(UserDict):
         :param vm_root_dir: root directory of all vmware instances
         :param keyword: search for 'keyword' in all VM's names and only run these VMs
         :param t_between_sessions: time in seconds between two machine sessions. default to 5s
-        :param enable (of screenshot): do you enable taking screenshot?
+        :param screenshot_enable: do you enable taking screenshot. Default to True
         :param days_between_screenshots: time in seconds between two machine sessions. default to 5s
         :param screenshot_dir: output screenshot path. Default to "../screenshots"
         """
@@ -33,7 +34,7 @@ class Config(UserDict):
             "monitor":{
                 "log_path": pathlib.Path(log_path),
                 "screenshot":{
-                    "enable": True,
+                    "enable": screenshot_enable,
                     "days_between_screenshots": days_between_screenshots,
                     "screenshot_dir": pathlib.Path(screenshot_dir)      
                 }
@@ -59,7 +60,8 @@ class Config(UserDict):
         data["monitor"]["screenshot"]["screenshot_dir"] = str(self.data["monitor"]["screenshot"]["screenshot_dir"].as_posix())
 
         with open(file_path, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f,
+                     sort_keys=False, indent=4)
             print(f'Config saved to {file_path}')
 
     
