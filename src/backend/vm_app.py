@@ -11,7 +11,8 @@ class VMApp:
     :param vm_root_dir: root directory of all vmware instances
     :param keyword: search for 'keyword' in all VM's names and only run these VMs
     :param t_between_sessions: time in seconds between two machine sessions. default to 5s
-    Should be greater thatn VMLogSession.t_running to avoid CPU overload
+    :param days_between_screenshots: time in seconds between two machine sessions. default to 5s
+    :param screenshot_dir: output screenshot path. Default to "../screenshots"
 
     :attr vm_log_sessions - list of log sessions
     :attr logger - log messages into "../log
@@ -30,8 +31,11 @@ class VMApp:
         self.keyword = config["keyword"]
         self.t_between_sessions = config["t_between_sessions"]
         self.t_running = config["t_running"]
-        self.vm_log_sessions = []
         self.logger = Logger.instance(__name__, config["log_path"])
+        self.days_between_screenshots = config["days_between_screenshots"]
+        self.screenshot_dir = config["screenshot_dir"]
+
+        self.vm_log_sessions = []
         config.save_config(config.file_path)
 
     def run(self):
@@ -74,7 +78,7 @@ class VMApp:
             # vm_name = path.split("/")[-1]
             vm_name = path.stem
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
-            log_session = VMLogSession(virtual_machine=vm, t_running = self.t_running)
+            log_session = VMLogSession(virtual_machine=vm, t_running = self.t_running, take_screenshot=True) #TODO: take screenshot based on calculation
             vm_log_sessions.append(log_session)
         return vm_log_sessions
 

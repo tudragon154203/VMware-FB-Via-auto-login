@@ -9,8 +9,8 @@ class Config(UserDict):
     def __init__(self, vm_root_dir="..", keyword="ads", 
     t_running=60, t_between_sessions=5, 
     log_path="../log.txt", 
-    days_between_snapshots = 3,
-    snapshot_dir = "../snapshots",
+    days_between_screenshots = 3,
+    screenshot_dir = "../screenshots",
     file_path = "config.json"):
         """
         Initialize Config class with default values for vm_root_dir, keyword, t_running, t_between_sessions and log_path
@@ -21,8 +21,8 @@ class Config(UserDict):
             "t_running": t_running,
             "t_between_sessions": t_between_sessions,
             "log_path": pathlib.Path(log_path),
-            "days_between_snapshots": days_between_snapshots,
-            "snapshot_dir": pathlib.Path(snapshot_dir)
+            "days_between_screenshots": days_between_screenshots,
+            "screenshot_dir": pathlib.Path(screenshot_dir)
         }
         self.file_path = pathlib.Path(file_path)
         super().__init__(data)
@@ -41,7 +41,7 @@ class Config(UserDict):
         data = self.data
         data["vm_root_dir"] = str(self.data["vm_root_dir"].as_posix())
         data["log_path"] = str(self.data["log_path"].as_posix())
-        data["snapshot_dir"] = str(self.data["snapshot_dir"].as_posix())
+        data["screenshot_dir"] = str(self.data["screenshot_dir"].as_posix())
 
         with open(file_path, "w") as f:
             json.dump(data, f)
@@ -62,7 +62,7 @@ class Config(UserDict):
                 # parse paths using pathlib
                 self.data["vm_root_dir"] = pathlib.Path(config_data["vm_root_dir"])
                 self.data["log_path"] = pathlib.Path(config_data["log_path"])
-                self.data["snapshot_dir"] = pathlib.Path(config_data["snapshot_dir"])
+                self.data["screenshot_dir"] = pathlib.Path(config_data["screenshot_dir"])
 
                 print(f'Config loaded: {config_data}')
         except: #No file_path

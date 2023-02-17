@@ -37,6 +37,7 @@ Parameters:
 + _start_vm(): start the virtual machine
 + _wait(): wait for t_running seconds
 + _stop_vm(): stop the virtual machine
++ _take_screenshot(): take a screenshot of this VM
 
 c> VMApp: scan the machines in hard disks for virtual machines (VMs), generate VirtualMachine and VMLogSessions
 Attributes:
@@ -61,11 +62,9 @@ Deprecated, using cronjob of linux or windows Task Scheduler
 
 e> VMMonitor: monitoring VMs. No attribute.
 static method: get_running_vmx_paths(), return paths of running .vmx files using "vmrun list" command in a subprocesss
-public method: 
+public method:
 
 is_running(VirtualMachine): check if this virtual machine is running
-
-take_snapshot(VirtualMachine): take a snapshot (screen capture) of this VMs
 
 f> Config: a python configuration class that uses json library
 Data to save:
@@ -76,5 +75,5 @@ Data to save:
 + t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook. Default to 60.
 + t_between_sessions: time in seconds between two machine sessions. Default to 5.
 + log_path: output logging path. Default to "../log.txt"
-+ days_between_snapshots: time in days between two consecutive snapshots. Default to 3.
-+ snapshot_dir: output snapshot path. Default to "../snapshots"
++ days_between_screenshots: time in days between two consecutive screenshots. Default to 3.
++ screenshot_dir: output screenshot path. Default to "../screenshots"

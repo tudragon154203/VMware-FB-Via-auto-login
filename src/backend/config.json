@@ -1,1 +1,1 @@
-{"vm_root_dir": "../../..", "keyword": "_ads_", "t_running": 60, "t_between_sessions": 3, "log_path": "../../../log.txt", "days_between_snapshots": 3, "snapshot_dir": "../../../snapshots"}
+{"vm_root_dir": "../../..", "keyword": "_ads_", "t_running": 60, "t_between_sessions": 3, "log_path": "../../../log.txt", "days_between_screenshots": 3, "screenshot_dir": "../../../screenshots"}
