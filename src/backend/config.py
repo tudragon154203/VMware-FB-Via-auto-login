@@ -13,7 +13,12 @@ class Config(UserDict):
     screenshot_dir = "../screenshots",
     file_path = "config.json"):
         """
-        Initialize Config class with default values for vm_root_dir, keyword, t_running, t_between_sessions and log_path
+        Initialize Config class with default values:
+        :param vm_root_dir: root directory of all vmware instances
+        :param keyword: search for 'keyword' in all VM's names and only run these VMs
+        :param t_between_sessions: time in seconds between two machine sessions. default to 5s
+        :param days_between_screenshots: time in seconds between two machine sessions. default to 5s
+        :param screenshot_dir: output screenshot path. Default to "../screenshots"
         """
         data = {
             "vm_root_dir": pathlib.Path(vm_root_dir),
