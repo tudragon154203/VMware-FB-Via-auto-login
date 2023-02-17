@@ -7,23 +7,23 @@ class Config(UserDict):
     Has save_config and load_config method
     """
     def __init__(self, vm_root_dir="..", keyword="ads", 
-    t_running=60, t_between_sessions=5, 
+    t_running=75, t_between_sessions=5, 
     log_path="../log.txt", 
-    days_between_screenshots = 3,
+    days_between_screenshots = 1,
     screenshot_enable = True,
     screenshot_dir = "../screenshots",
     file_path = "config.json",
     guest_username = "ads",
-    guest_password = "",):
+    guest_password = ""):
         """
         Initialize Config class with default values:
         :param vm_root_dir: root directory of all vmware instances
         :param keyword: search for 'keyword' in all VM's names and only run these VMs
-        :param t_running: time from starting to stopping the VM
+        :param t_running: time from starting to stopping the VM. Default to 75s
         :param t_between_sessions: time in seconds between two machine sessions. default to 5s
         ------------------
         :param screenshot_enable: do you enable taking screenshot. Default to True
-        :param days_between_screenshots: time in seconds between two machine sessions. default to 5s
+        :param days_between_screenshots: time in seconds between two machine sessions. default to 1 (everyday)
         :param screenshot_dir: output screenshot path. Default to "../screenshots"
         :param guest_username: (optional) VM's login username. Needed for screen capturing or more comple functionalities
         :param guest_password: (optional) VM's login password.

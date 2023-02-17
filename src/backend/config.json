@@ -4,12 +4,13 @@
         "vm_root_dir": "../../.."
     },
     "runtime": {
-        "t_between_sessions": 3,
-        "t_running": 60
+        "t_between_sessions": 5,
+        "t_running": 75
     },
     "monitor": {
         "log_path": "../../../log.txt",
         "screenshot": {
+            "enable": true,
             "days_between_screenshots": 1,
             "screenshot_dir": "../../../screenshots"
         },

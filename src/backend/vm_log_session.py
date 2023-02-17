@@ -17,9 +17,7 @@ class VMLogSession:
 
     """ a log in and out session of a VirtualMachine. Attributes:
     :param virtual_machine: a VirtualMachine instance
-    :param t_running: time in seconds between start and stop a virtual machine. Should be enough for VM to boot and go into Facebook.
-    Through experment, it takes 50s to complete, so set default = 60 for some room
-    :param take_screenshot: whether or not to take screenshot
+    :param config: passed from app
 
     :attr status: an enum of READY, RUNNING, WAITING, COMPLETED, ERROR, similar to the processes of tasks in an OS
     :attr created_at: time this session has been created
@@ -33,21 +31,22 @@ class VMLogSession:
     + _start_vm(): start the virtual machine, using vmrun bash script
     + _wait(): wait for t_running seconds
     + _stop_vm(): stop the virtual machine, also use vmrun"""
-    def __init__(self, virtual_machine, t_running=60, take_screenshot = False):
+    def __init__(self, virtual_machine, config):
         self.virtual_machine = virtual_machine
-        self.t_running = t_running
+        self.config = config
+
+        # inner attr
         self.status = self.Status.READY
         self.created_at = time.time()
         self.completed_at = None
-        self.take_screenshot = take_screenshot
         self.logger = Logger.instance()
 
     def run(self):
         try:
             self._start_vm()
             self._wait()
-            if self.take_screenshot:
-                self._take_screenshot()
+            if self.config["monitor"]["screenshot"]["enable"]:
+                self._take_screenshot()             #TODO: take screenshot based on calculation whether to take it
             self._stop_vm()
             self.completed_at = time.time()
         except Exception as e:
@@ -64,14 +63,14 @@ class VMLogSession:
 
         if VMMonitor.is_running(self.virtual_machine):
             self.status = self.Status.RUNNING
-            self.logger.log(f'{self.virtual_machine.name} has started successfully')
+            self.logger.log(f'{self.virtual_machine.get_name()} has started successfully')
         else:
             self.status = self.Status.ERROR
-            self.logger.error(f'{self.virtual_machine.name} has failed to start')
+            self.logger.error(f'{self.virtual_machine.get_name()} has failed to start')
         
 
     def _wait(self):
-        time.sleep(self.t_running)
+        time.sleep(self.config["runtime"]["t_running"])
 
     def _stop_vm(self):
         # Code to stop the virtual machine
@@ -83,21 +82,25 @@ class VMLogSession:
 
         if not VMMonitor.is_running(self.virtual_machine):
             self.status = self.Status.COMPLETED
-            self.logger.log(f'{self.virtual_machine.name} has stopped successfully')
+            self.logger.log(f'{self.virtual_machine.get_name()} has stopped successfully')
         else:
             self.status = self.Status.ERROR
-            self.logger.error(f'{self.virtual_machine.name} has failed to stop')
+            self.logger.error(f'{self.virtual_machine.get_name()} has failed to stop')
 
     def _take_screenshot(self):
-        print("Taking screenshot...")
+        # print("Taking screenshot...")
         abs_path = self.get_vm_abs_path()
         username = self.config["monitor"]["guest_credentials"]["username"]
         password = self.config["monitor"]["guest_credentials"]["password"]
         output_img_path = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) / self.virtual_machine.get_name()
-        output_img_path = str(output_img_path)
-        vmrun_capturescreen_command = f"vmrun -T ws -gu {username} -gp {password} captureScreen {abs_path} {output_img_path}"
-        print("output_img_path", output_img_path)
-        print("vmrun_capturescreen_command", vmrun_capturescreen_command)
+        output_img_path = str(output_img_path) + ".jpg"
+
+        vmrun_capturescreen_command = f"vmrun -T ws -gu '{username}' -gp '{password}' captureScreen '{abs_path}' '{output_img_path}'"
+
+        # print("output_img_path", output_img_path)
+        # print("vmrun_capturescreen_command", vmrun_capturescreen_command)
+        
+        self.logger.log(f"Taking screenshot into {output_img_path}, using log-in credentials {username} - {password}")
         self.logger.log(vmrun_capturescreen_command)
         subprocess.run(vmrun_capturescreen_command, shell=True)
 

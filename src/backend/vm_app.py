@@ -68,9 +68,7 @@ class VMApp:
             # vm_name = path.split("/")[-1]
             vm_name = path.stem
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
-            log_session = VMLogSession(virtual_machine=vm, 
-                                       t_running = self.config["runtime"]["t_running"], take_screenshot=True) 
-            #TODO: take screenshot based on calculation whether to take it
+            log_session = VMLogSession(virtual_machine=vm, config = self.config) 
             vm_log_sessions.append(log_session)
         return vm_log_sessions
 
