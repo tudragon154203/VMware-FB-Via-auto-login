@@ -39,7 +39,7 @@ Sau khi thỏa mãn các yêu cầu trên, download source code của repository
 3. Quay lại command line, khởi động phần mềm:
 
    ```
-   python3 vm_app.py
+   python3 main.py
    ```
 
    Khi cửa sổ VMware Workstation hiện lên và bắt đầu chạy lần lượt các VMs, bạn đã khởi động thành công
@@ -61,7 +61,7 @@ Sau khi thỏa mãn các yêu cầu trên, download source code của repository
 3. Quay lại terminal, khởi động phần mềm:
 
    ```
-   python3 vm_app.py
+   python3 main.py
    ```
 
    Khi cửa sổ VMware Workstation hiện lên và bắt đầu chạy lần lượt các VMs, bạn đã khởi động thành công.
