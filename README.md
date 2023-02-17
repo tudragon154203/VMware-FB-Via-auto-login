@@ -22,7 +22,19 @@ Hãy tham gia group support Ngô Thành để xem video hướng dẫn sử dụ
 
 Sau khi thỏa mãn các yêu cầu trên, download source code của repository này về tiến hành chạy tool thử như sau:
 
-### Windows
+### Chinh file src/backend/config.json
+Dung chung cho Linux va Windows, chi khac o duong dan file, thu muc
+
+   * vm_root_dir: thư mục gốc chứa các virtual machines (VMs). Ex: "D:\VMware machines", "~/virtual machines"
+   * log_path: đường dẫn file text sẽ ghi log vào. P.mềm tự tạo nếu chưa có. Ex: "..\..\log.txt", "../../log.txt"
+   * keyword: cụm từ tìm kiếm. Tool sẽ chỉ khởi động những VMs có chứa cụm này trong trên. Ex: "via", "ads", "2023",...
+   * (Optional) t_running: thời gian (tính theo giây) từ lúc bật đến lúc tắt 1 VM. Nên đủ để VM khởi động vào log vào Facebook, mặc định 60s. Nếu máy tính bạn quá chậm nên tăng thêm
+   * (Optional) t_between_sessions: thời gian (tính theo giây) từ lúc tắt VM này đến lúc bật VM tiếp theo. Mặc định 3s.
+
+   Cac muc config "screenshot" va "credentials" la tuy chon. Neu khong kich hoat screenshot (enable:false trong config.json) thi khong can quan tam credentials
+
+### Khoi Chay
+#### Windows
 
 1. Mở command line, vào thư mục *src/backend:*
 
@@ -31,11 +43,8 @@ Sau khi thỏa mãn các yêu cầu trên, download source code của repository
    ```
 2. Chỉnh sửa file config.json trong thư mục backend:
 
-   * vm_root_dir: thư mục gốc chứa các virtual machines (VMs). Ex: "D:\VMware machines"
-   * log_path: đường dẫn file text sẽ ghi log vào. P.mềm tự tạo nếu chưa có. Ex: "..\..\log.txt"
-   * keyword: cụm từ tìm kiếm. Tool sẽ chỉ khởi động những VMs có chứa cụm này trong trên. Ex: "via", "ads", "2023",...
-   * (Optional) t_running: thời gian (tính theo giây) từ lúc bật đến lúc tắt 1 VM. Nên đủ để VM khởi động vào log vào Facebook, mặc định 60s. Nếu máy tính bạn quá chậm nên tăng thêm
-   * (Optional) t_between_sessions: thời gian (tính theo giây) từ lúc tắt VM này đến lúc bật VM tiếp theo. Mặc định 3s.
+   Theo huong dan ben tren
+   
 3. Quay lại command line, khởi động phần mềm:
 
    ```
@@ -44,7 +53,7 @@ Sau khi thỏa mãn các yêu cầu trên, download source code của repository
 
    Khi cửa sổ VMware Workstation hiện lên và bắt đầu chạy lần lượt các VMs, bạn đã khởi động thành công
 
-### Linux (Ubuntu, Fedora,...)
+#### Linux (Ubuntu, Fedora,...)
 
 1. Mở terminal, vào thư mục *src/backend:*
 
@@ -53,11 +62,9 @@ Sau khi thỏa mãn các yêu cầu trên, download source code của repository
    ```
 2. Chỉnh sửa file config.json trong thư mục backend:
 
-   * vm_root_dir: thư mục gốc chứa các virtual machines (VMs). Ex: "~/virtual machines"
-   * log_path: đường dẫn file text sẽ ghi log vào. P.mềm tự tạo nếu chưa có. Ex: "../../log.txt"
-   * keyword: cụm từ tìm kiếm. Tool sẽ chỉ khởi động những VMs có chứa cụm này trong trên. Ex: "via", "ads", "2023",...
-   * (Optional) t_running: thời gian (tính theo giây) từ lúc bật đến lúc tắt 1 VM. Nên đủ để VM khởi động vào log vào Facebook, mặc định 60s. Nếu máy tính bạn quá chậm nên tăng thêm
-   * (Optional) t_between_sessions: thời gian (tính theo giây) từ lúc tắt VM này đến lúc bật VM tiếp theo. Mặc định 3s.
+   Theo huong dan ben tren
+
+   
 3. Quay lại terminal, khởi động phần mềm:
 
    ```
