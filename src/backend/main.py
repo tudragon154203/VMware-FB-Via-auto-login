@@ -14,7 +14,8 @@ if __name__ == "__main__":
     config = Config(file_path=config_file_path)
     config.load_config(config_file_path)
     config.save_config(config_file_path)
+
     logger = Logger.instance(__name__, config["monitor"]["log_path"])
 
-    vm_app = VMApp(config, logger)
+    vm_app = VMApp(config)
     vm_app.run()

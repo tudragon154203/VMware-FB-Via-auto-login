@@ -9,8 +9,7 @@ class VMApp:
     """
     Initialize VMApp class with vm_root_dir, keyword and t_between_sessions
     :param config - contain all configurable params
-    :param logger - log messages into txt file specified in config
-
+    
     :attr vm_log_sessions - list of log sessions
 
     Method:
@@ -21,9 +20,9 @@ class VMApp:
     + _scan(): scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword. Return list of absolute paths of .vmx files
     + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
     """
-    def __init__(self, config, logger):
+    def __init__(self, config):
         self.config = config
-        self.logger = logger
+        self.logger = Logger.instance()
         self.vm_log_sessions = []
 
     def run(self):
@@ -89,7 +88,6 @@ if __name__ == "__main__":
 
     config.load_config(config_file_path)
     config.save_config(config.file_path)
-    logger = Logger.instance(__name__, config["monitor"]["log_path"])
 
-    vm_app = VMApp(config, logger)
+    vm_app = VMApp(config)
     vm_app.run()
