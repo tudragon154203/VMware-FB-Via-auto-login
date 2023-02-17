@@ -5,6 +5,7 @@ import time
 import subprocess
 import pathlib
 from logger import Logger 
+from datetime import date 
 
 class VMLogSession:
 
@@ -45,13 +46,31 @@ class VMLogSession:
         try:
             self._start_vm()
             self._wait()
-            if self.config["monitor"]["screenshot"]["enable"]:
-                self._take_screenshot()             #TODO: take screenshot based on calculation whether to take it
+            if self._is_today_screenshot_day():
+                self._take_screenshot()             
             self._stop_vm()
             self.completed_at = time.time()
         except Exception as e:
             self.status = self.Status.ERROR
             raise e
+        
+    def _is_today_screenshot_day(self):
+        """Decide whether or not to take screen shot. 
+        Depend on config and today's date
+        Return: bool"""
+        if not self.config["monitor"]["screenshot"]["enable"]:
+            return False
+        else:
+            today = date.today()
+            anchor_date = date.min
+            difference = (today - anchor_date).days
+            # print(f"date difference: {difference}")
+            if difference % self.config["monitor"]["screenshot"]["days_between_screenshots"] == 0:
+                self.logger.log(f"Date check: Today's screenshot day! ({today})")
+                return True
+            else:
+                self.logger.log(f"Date check: Today's NOT screenshot day! ({today})")
+                return False
 
     def _start_vm(self):
         # Code to start the virtual machine
@@ -101,7 +120,7 @@ class VMLogSession:
         # print("vmrun_capturescreen_command", vmrun_capturescreen_command)
         
         self.logger.log(f"Taking screenshot into {output_img_path}, using log-in credentials {username} - {password}")
-        self.logger.log(vmrun_capturescreen_command)
+        # self.logger.log(vmrun_capturescreen_command)
         subprocess.run(vmrun_capturescreen_command, shell=True)
 
     # Getters
