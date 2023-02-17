@@ -77,7 +77,7 @@ class VMLogSession:
         # vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) 
         abs_path = self.get_vm_abs_path()
         vmrun_start_command = "vmrun start " +  '"' + abs_path +  '"'
-        self.logger.log(vmrun_start_command)
+        # self.logger.log(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
         if VMMonitor.is_running(self.virtual_machine):
@@ -96,7 +96,7 @@ class VMLogSession:
         # vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) 
         abs_path = self.get_vm_abs_path()
         vmrun_stop_command = "vmrun stop " +  '"' + abs_path +  '"'
-        self.logger.log(vmrun_stop_command)
+        # self.logger.log(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
         if not VMMonitor.is_running(self.virtual_machine):
@@ -107,12 +107,13 @@ class VMLogSession:
             self.logger.error(f'{self.virtual_machine.get_name()} has failed to stop')
 
     def _take_screenshot(self):
+        """Using credentials in config to take a screenshot of the runing VM"""
         # print("Taking screenshot...")
         abs_path = self.get_vm_abs_path()
         username = self.config["monitor"]["guest_credentials"]["username"]
         password = self.config["monitor"]["guest_credentials"]["password"]
-        output_img_path = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) / self.virtual_machine.get_name()
-        output_img_path = str(output_img_path) + ".jpg"
+
+        output_img_path = self._get_screenshot_img_path_mkdir()
 
         vmrun_capturescreen_command = f"vmrun -T ws -gu '{username}' -gp '{password}' captureScreen '{abs_path}' '{output_img_path}'"
 
@@ -122,6 +123,18 @@ class VMLogSession:
         self.logger.log(f"Taking screenshot into {output_img_path}, using log-in credentials {username} - {password}")
         # self.logger.log(vmrun_capturescreen_command)
         subprocess.run(vmrun_capturescreen_command, shell=True)
+        self.logger.log("Screenshot taken")
+    
+    def _get_screenshot_img_path_mkdir(self):
+        """Return the output img path. Make dirs if dir not found"""
+        screenshot_dir = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) 
+        screenshot_dir.mkdir(parents = True, exist_ok = True)
+        self.logger.log(f"Creating dir if not exist: {screenshot_dir}")
+
+        output_img_path = screenshot_dir / self.virtual_machine.get_name()
+        output_img_path = str(output_img_path) + ".jpg"
+
+        return output_img_path
 
     # Getters
     def get_status(self):

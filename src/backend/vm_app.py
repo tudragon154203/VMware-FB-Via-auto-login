@@ -8,10 +8,10 @@ import pathlib
 class VMApp:
     """
     Initialize VMApp class with vm_root_dir, keyword and t_between_sessions
-    params passed through self.config:
-    
+    :param config - contain all configurable params
+    :param logger - log messages into txt file specified in config
+
     :attr vm_log_sessions - list of log sessions
-    :attr logger - log messages into "../log
 
     Method:
     + run(): _scan() to get list of .vmx files, then _create_sessions() to get list of VMLogSession. For each VMLogSession instance, call its run() method, wait for t_between_sessions seconds and call run() of the next one.
@@ -21,11 +21,10 @@ class VMApp:
     + _scan(): scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword. Return list of absolute paths of .vmx files
     + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
     """
-    def __init__(self, config):
+    def __init__(self, config, logger):
         self.config = config
-        self.logger = Logger.instance(__name__, config["monitor"]["log_path"])
+        self.logger = logger
         self.vm_log_sessions = []
-        config.save_config(config.file_path)
 
     def run(self):
         """
@@ -36,7 +35,7 @@ class VMApp:
         """
         self.logger.log("New VMApp instance started")
         vmx_paths = self._scan()
-        print("Found virtual machine paths:", vmx_paths)
+        self.logger.log(f"Found virtual machine paths: {vmx_paths}")
         self.vm_log_sessions = self._create_sessions(vmx_paths)
         length = len(self.vm_log_sessions)
 
@@ -87,6 +86,10 @@ if __name__ == "__main__":
     # config_file_path = "config.json"
     config_file_path = "src/backend/config.json"
     config = Config(file_path=config_file_path)
+
     config.load_config(config_file_path)
-    vm_app = VMApp(config)
+    config.save_config(config.file_path)
+    logger = Logger.instance(__name__, config["monitor"]["log_path"])
+
+    vm_app = VMApp(config, logger)
     vm_app.run()

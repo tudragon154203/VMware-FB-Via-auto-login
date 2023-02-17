@@ -1,6 +1,7 @@
 import json
 from collections import UserDict
 import pathlib
+from logger import Logger 
 
 class Config(UserDict):
     """ A dictionary used for configuration

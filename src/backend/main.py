@@ -1,6 +1,7 @@
 from vm_app import VMApp
 from config import Config
 import argparse
+from logger import Logger 
 
 # Parser: Have one argument: config path
 parser = argparse.ArgumentParser()
@@ -12,5 +13,8 @@ if __name__ == "__main__":
     config_file_path = args.config_path
     config = Config(file_path=config_file_path)
     config.load_config(config_file_path)
-    vm_app = VMApp(config)
+    config.save_config(config_file_path)
+    logger = Logger.instance(__name__, config["monitor"]["log_path"])
+
+    vm_app = VMApp(config, logger)
     vm_app.run()
