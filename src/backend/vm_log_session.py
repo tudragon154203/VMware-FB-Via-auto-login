@@ -92,6 +92,7 @@ class VMLogSession:
         time.sleep(self.config["runtime"]["t_running"])
 
     def _stop_vm(self):
+        # TODO: debug why stopping takes so long
         # Code to stop the virtual machine
         # vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) 
         abs_path = self.get_vm_abs_path()

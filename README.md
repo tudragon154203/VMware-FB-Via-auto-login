@@ -28,8 +28,8 @@ Dung chung cho Linux va Windows, chi khac o duong dan file, thu muc
    * vm_root_dir: thư mục gốc chứa các virtual machines (VMs). Ex: "D:\VMware machines", "~/virtual machines"
    * log_path: đường dẫn file text sẽ ghi log vào. P.mềm tự tạo nếu chưa có. Ex: "..\..\log.txt", "../../log.txt"
    * keyword: cụm từ tìm kiếm. Tool sẽ chỉ khởi động những VMs có chứa cụm này trong trên. Ex: "via", "ads", "2023",...
-   * (Optional) t_running: thời gian (tính theo giây) từ lúc bật đến lúc tắt 1 VM. Nên đủ để VM khởi động vào log vào Facebook, mặc định 60s. Nếu máy tính bạn quá chậm nên tăng thêm
-   * (Optional) t_between_sessions: thời gian (tính theo giây) từ lúc tắt VM này đến lúc bật VM tiếp theo. Mặc định 3s.
+   * (Optional) t_running: thời gian (tính theo giây) từ lúc bật đến lúc tắt 1 VM. Nên đủ để VM khởi động vào log vào Facebook, mặc định 00s. Nếu máy tính bạn quá chậm nên tăng thêm
+   * (Optional) t_between_sessions: thời gian (tính theo giây) từ lúc tắt VM này đến lúc bật VM tiếp theo. Mặc định 5s.
 
    Cac muc config "screenshot" va "credentials" la tuy chon. Neu khong kich hoat screenshot (enable:false trong config.json) thi khong can quan tam credentials
 

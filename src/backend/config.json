@@ -5,7 +5,7 @@
     },
     "runtime": {
         "t_between_sessions": 5,
-        "t_running": 75
+        "t_running": 90
     },
     "monitor": {
         "log_path": "../../../log.txt",

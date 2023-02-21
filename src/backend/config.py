@@ -8,7 +8,7 @@ class Config(UserDict):
     Has save_config and load_config method
     """
     def __init__(self, vm_root_dir="..", keyword="ads", 
-    t_running=75, t_between_sessions=5, 
+    t_running=90, t_between_sessions=5, 
     log_path="../log.txt", 
     days_between_screenshots = 1,
     screenshot_enable = True,
@@ -20,7 +20,7 @@ class Config(UserDict):
         Initialize Config class with default values:
         :param vm_root_dir: root directory of all vmware instances
         :param keyword: search for 'keyword' in all VM's names and only run these VMs
-        :param t_running: time from starting to stopping the VM. Default to 75s
+        :param t_running: time from starting to stopping the VM. Default to 90s
         :param t_between_sessions: time in seconds between two machine sessions. default to 5s
         ------------------
         :param screenshot_enable: do you enable taking screenshot. Default to True
