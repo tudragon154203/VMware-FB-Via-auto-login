@@ -1,12 +1,13 @@
 import logging
 
+
 class Logger:
     """ Logger: wrapper for logging buil-in Python lib
     Singleton design pattern to avoid Logger duplication"""
     _instance = None
-    
+
     @classmethod
-    def instance(cls, name = "", file_name='../log.txt'):
+    def instance(cls, name="", file_name='../log.txt'):
         if cls._instance is None:
             cls._instance = Logger(name, file_name)
         return cls._instance
@@ -30,11 +31,11 @@ class Logger:
     def log(self, message):
         # Log the given message
         self.logger.info(message)
-    
+
     def error(self, message):
         self.logger.error(message)
 
-# Usage
+
 if __name__ == "__main__":
     logger = Logger(__name__)
     logger.log("This is a test log message.")

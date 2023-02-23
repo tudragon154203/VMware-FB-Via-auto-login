@@ -1,12 +1,12 @@
 from .vm_app import VMApp
 from .config import Config
 import argparse
-from logger import Logger 
+from logger import Logger
 
 # Parser: Have one argument: config path
 parser = argparse.ArgumentParser()
 parser.add_argument("-p", "--config-path", help="configuration file path. Default to ./config.json",
-                            default="config.json")
+                    default="config.json")
 args = parser.parse_args()
 
 if __name__ == "__main__":

@@ -2,6 +2,7 @@ import subprocess
 import time
 from .virtual_machine import VirtualMachine
 
+
 class VMMonitor:
     """Helper functions to monitor VMs"""
 
@@ -29,6 +30,7 @@ class VMMonitor:
         vmx_name = virtual_machine.vmx_file_path.stem
         joined_path = " ".join(running_vmx_paths)
         return vmx_name in joined_path
+
 
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")

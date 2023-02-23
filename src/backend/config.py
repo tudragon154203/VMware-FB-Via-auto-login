@@ -1,21 +1,21 @@
 import json
 from collections import UserDict
 import pathlib
-from .logger import Logger 
+
 
 class Config(UserDict):
     """ A dictionary used for configuration
     Has save_config and load_config method
     """
-    def __init__(self, vm_root_dir="..", keyword="ads", 
-    t_running=90, t_between_sessions=5, 
-    log_path="../log.txt", 
-    days_between_screenshots = 1,
-    screenshot_enable = True,
-    screenshot_dir = "../screenshots",
-    file_path = "config.json",
-    guest_username = "ads",
-    guest_password = ""):
+    def __init__(   self, vm_root_dir="..", keyword="ads",
+                    t_running=90, t_between_sessions=5,
+                    log_path="../log.txt",
+                    days_between_screenshots=1,
+                    screenshot_enable=True,
+                    screenshot_dir="../screenshots",
+                    file_path="config.json",
+                    guest_username="ads",
+                    guest_password=""):
         """
         Initialize Config class with default values:
         :param vm_root_dir: root directory of all vmware instances
@@ -30,22 +30,22 @@ class Config(UserDict):
         :param guest_password: (optional) VM's login password.
         """
         data = {
-            "vm_filter":{
+            "vm_filter": {
                 "vm_root_dir": pathlib.Path(vm_root_dir),
                 "keyword": keyword
             },
-            "runtime":{
+            "runtime": {
                 "t_running": t_running,
                 "t_between_sessions": t_between_sessions
             },
-            "monitor":{
+            "monitor": {
                 "log_path": pathlib.Path(log_path),
-                "screenshot":{
+                "screenshot": {
                     "enable": screenshot_enable,
                     "days_between_screenshots": days_between_screenshots,
-                    "screenshot_dir": pathlib.Path(screenshot_dir)      
+                    "screenshot_dir": pathlib.Path(screenshot_dir)
                 },
-                "guest_credentials":{
+                "guest_credentials": {
                     "username": guest_username,
                     "password": guest_password
                 }
@@ -72,16 +72,15 @@ class Config(UserDict):
 
         with open(file_path, "w") as f:
             json.dump(data, f,
-                     sort_keys=False, indent=4)
+                      sort_keys=False, indent=4)
             print(f'Config saved to {file_path}')
 
-    
-    def load_config(self, file_path = None):
+    def load_config(self, file_path=None):
         """
         Load the configuration data from a json file
         :param file_path: file path to load the json data
         """
-        file_path = pathlib.Path(file_path) 
+        file_path = pathlib.Path(file_path)
         try:
             with open(file_path, "r") as f:
                 config_data = json.load(f)
@@ -93,13 +92,15 @@ class Config(UserDict):
                 self.data["monitor"]["screenshot"]["screenshot_dir"] = pathlib.Path(config_data["monitor"]["screenshot"]["screenshot_dir"])
 
                 print(f'Config loaded: {config_data}')
-        except: #No file_path
+        except:
+            # No file_path
             print("No config, using default value")
             return
+
 
 if __name__ == "__main__":
     config = Config()
     # config_file_path = "config.json"
     config_file_path = "src/backend/config.json"
-    config.load_config(file_path = config_file_path)
-    config.save_config(file_path = config_file_path)
+    config.load_config(file_path=config_file_path)
+    config.save_config(file_path=config_file_path)

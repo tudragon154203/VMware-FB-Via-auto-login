@@ -4,8 +4,9 @@ from .vm_monitor import VMMonitor
 import time
 import subprocess
 import pathlib
-from .logger import Logger 
-from datetime import date 
+from .logger import Logger
+from datetime import date
+
 
 class VMLogSession:
 
@@ -47,15 +48,15 @@ class VMLogSession:
             self._start_vm()
             self._wait()
             if self._is_today_screenshot_day():
-                self._take_screenshot()             
+                self._take_screenshot()
             self._stop_vm()
             self.completed_at = time.time()
         except Exception as e:
             self.status = self.Status.ERROR
             raise e
-        
+
     def _is_today_screenshot_day(self):
-        """Decide whether or not to take screen shot. 
+        """Decide whether or not to take screen shot.
         Depend on config and today's date
         Return: bool"""
         if not self.config["monitor"]["screenshot"]["enable"]:
@@ -74,9 +75,9 @@ class VMLogSession:
 
     def _start_vm(self):
         # Code to start the virtual machine
-        # vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        # vmrun_start_command = "vmrun start " + shlex.quote(self.virtual_machine.vmx_file_path)
         abs_path = self.get_vm_abs_path()
-        vmrun_start_command = "vmrun start " +  '"' + abs_path +  '"'
+        vmrun_start_command = "vmrun start " + '"' + abs_path + '"'
         # self.logger.log(vmrun_start_command)
         subprocess.run(vmrun_start_command, shell=True)
 
@@ -86,7 +87,6 @@ class VMLogSession:
         else:
             self.status = self.Status.ERROR
             self.logger.error(f'{self.virtual_machine.get_name()} has failed to start')
-        
 
     def _wait(self):
         time.sleep(self.config["runtime"]["t_running"])
@@ -94,9 +94,9 @@ class VMLogSession:
     def _stop_vm(self):
         # TODO: debug why stopping takes so long
         # Code to stop the virtual machine
-        # vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path) 
+        # vmrun_stop_command = "vmrun stop " + shlex.quote(self.virtual_machine.vmx_file_path)
         abs_path = self.get_vm_abs_path()
-        vmrun_stop_command = "vmrun stop " +  '"' + abs_path +  '"'
+        vmrun_stop_command = "vmrun stop " + '"' + abs_path + '"'
         # self.logger.log(vmrun_stop_command)
         subprocess.run(vmrun_stop_command, shell=True)
 
@@ -120,16 +120,16 @@ class VMLogSession:
 
         # print("output_img_path", output_img_path)
         # print("vmrun_capturescreen_command", vmrun_capturescreen_command)
-        
+
         self.logger.log(f"Taking screenshot into {output_img_path}, using log-in credentials {username} - {password}")
         # self.logger.log(vmrun_capturescreen_command)
         subprocess.run(vmrun_capturescreen_command, shell=True)
         self.logger.log("Screenshot taken")
-    
+
     def _get_screenshot_img_path_mkdir(self):
         """Return the output img path. Make dirs if dir not found"""
-        screenshot_dir = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"]) 
-        screenshot_dir.mkdir(parents = True, exist_ok = True)
+        screenshot_dir = pathlib.Path(self.config["monitor"]["screenshot"]["screenshot_dir"])
+        screenshot_dir.mkdir(parents=True, exist_ok=True)
         self.logger.log(f"Creating dir if not exist: {screenshot_dir}")
 
         output_img_path = screenshot_dir / self.virtual_machine.get_name()
@@ -149,6 +149,7 @@ class VMLogSession:
 
     def get_vm_abs_path(self):
         return str(self.virtual_machine.vmx_file_path.resolve())
+
 
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")

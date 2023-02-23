@@ -2,23 +2,25 @@ import time
 from .config import Config
 from .virtual_machine import VirtualMachine
 from .vm_log_session import VMLogSession
-from .logger import Logger 
+from .logger import Logger
 import pathlib
+
 
 class VMApp:
     """
     Initialize VMApp class with vm_root_dir, keyword and t_between_sessions
     :param config - contain all configurable params
-    
+
     :attr vm_log_sessions - list of log sessions
 
     Method:
-    + run(): _scan() to get list of .vmx files, then _create_sessions() to get list of VMLogSession. For each VMLogSession instance, call its run() method, wait for t_between_sessions seconds and call run() of the next one.
+    + run(): _scan() to get list of .vmx files, then _create_sessions() to get list of VMLogSession.
+    For each VMLogSession instance, call its run() method, wait for t_between_sessions seconds and call run() of the next one.
     + get_progress(): counts the number of VMLogSessions that have been completed
 
     Private methods:
     + _scan(): scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword. Return list of absolute paths of .vmx files
-    + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession 
+    + _create_sessions(vmx_paths): from list of .vmx files, create VMLogSession instances and put them in a list. Return list of VMLogSession
     """
     def __init__(self, config):
         self.config = config
@@ -27,9 +29,9 @@ class VMApp:
 
     def run(self):
         """
-        _scan() to get list of .vmx files, 
-        then _create_sessions() to get list of VMLogSession. 
-        For each VMLogSession instance, call its run() method, 
+        _scan() to get list of .vmx files,
+        then _create_sessions() to get list of VMLogSession.
+        For each VMLogSession instance, call its run() method,
         wait for t_between_sessions seconds and call run() of the next one.
         """
         self.logger.log("New VMApp instance started")
@@ -45,8 +47,7 @@ class VMApp:
 
     def _scan(self):
         """
-        scan all .vmx file in vm_root_dir recursively, 
-        look for those containing self.keyword. 
+        scan all .vmx file in vm_root_dir recursively, look for those containing self.keyword.
         Return list of absolute paths of .vmx files (unsorted)
         """
         vmx_paths = []
@@ -58,7 +59,7 @@ class VMApp:
 
     def _create_sessions(self, vmx_paths):
         """
-        from list of .vmx files, create VMLogSession instances and put them in a list. 
+        from list of .vmx files, create VMLogSession instances and put them in a list.
         Return list of VMLogSession (sorted a-z by path)
         """
         vm_log_sessions = []
@@ -66,7 +67,7 @@ class VMApp:
             # vm_name = path.split("/")[-1]
             vm_name = path.stem
             vm = VirtualMachine(name=vm_name, vmx_file_path=path)
-            log_session = VMLogSession(virtual_machine=vm, config = self.config) 
+            log_session = VMLogSession(virtual_machine=vm, config=self.config)
             vm_log_sessions.append(log_session)
         return vm_log_sessions
 
@@ -80,6 +81,7 @@ class VMApp:
             if session.status == VMLogSession.Status.COMPLETED:
                 completed_sessions += 1
         return completed_sessions
+
 
 if __name__ == "__main__":
     # config_file_path = "config.json"
