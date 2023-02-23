@@ -1,8 +1,8 @@
 import time
-from config import Config
-from virtual_machine import VirtualMachine
-from vm_log_session import VMLogSession
-from logger import Logger 
+from .config import Config
+from .virtual_machine import VirtualMachine
+from .vm_log_session import VMLogSession
+from .logger import Logger 
 import pathlib
 
 class VMApp:

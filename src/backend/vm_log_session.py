@@ -1,10 +1,10 @@
 from enum import Enum
-from virtual_machine import VirtualMachine
-from vm_monitor import VMMonitor
+from .virtual_machine import VirtualMachine
+from .vm_monitor import VMMonitor
 import time
 import subprocess
 import pathlib
-from logger import Logger 
+from .logger import Logger 
 from datetime import date 
 
 class VMLogSession:
@@ -153,5 +153,5 @@ class VMLogSession:
 if __name__ == "__main__":
     vm = VirtualMachine("ads 1", "/home/tudragon/SSD/VMware machines/2023.01.17_ads_001/2023.01.17_ads_001.vmx")
     # self.logger.log(vm.vmx_file_path)
-    vm_log_session = VMLogSession(vm)
-    vm_log_session.run()
+    # vm_log_session = VMLogSession(vm)
+    # vm_log_session.run()
