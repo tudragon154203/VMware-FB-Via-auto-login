@@ -1,0 +1,6 @@
+{
+  "ToxEnv": {
+    "name": "flake8",
+    "type": "VirtualEnvRunner"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "ToxEnv": {
+    "name": "mypy",
+    "type": "VirtualEnvRunner"
+  }
+}
