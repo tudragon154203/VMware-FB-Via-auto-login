@@ -2,5 +2,36 @@
   "ToxEnv": {
     "name": "mypy",
     "type": "VirtualEnvRunner"
+  },
+  "Python": {
+    "version_info": [
+      3,
+      10,
+      6,
+      "final",
+      0
+    ],
+    "executable": "/usr/bin/python3.10",
+    "virtualenv version": "20.19.0"
+  },
+  "PythonRun": {
+    "deps": {
+      "options": [],
+      "requirements": [
+        "flake8==6.0.0",
+        "mypy===1.0.1",
+        "pytest-cov==4.0.0",
+        "pytest==7.2.1",
+        "tox==4.4.6"
+      ],
+      "constraints": [],
+      "constraint_options": {
+        "constrain_package_deps": false,
+        "use_frozen_constraints": false
+      }
+    }
+  },
+  "RunToxEnv": {
+    "package_deps": []
   }
 }
