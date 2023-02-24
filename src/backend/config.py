@@ -7,7 +7,7 @@ class Config(UserDict):
     """ A dictionary used for configuration
     Has save_config and load_config method
     """
-    def __init__(   self, vm_root_dir="..", keyword="ads",
+    def __init__(self, vm_root_dir="..", keyword="ads",
                     t_running=90, t_between_sessions=5,
                     log_path="../log.txt",
                     days_between_screenshots=1,
@@ -92,9 +92,9 @@ class Config(UserDict):
                 self.data["monitor"]["screenshot"]["screenshot_dir"] = pathlib.Path(config_data["monitor"]["screenshot"]["screenshot_dir"])
 
                 print(f'Config loaded: {config_data}')
-        except:
+        except Exception as e:
             # No file_path
-            print("No config, using default value")
+            print(f"Error: {e} when loading {file_path}. Using default value")
             return
 
 
