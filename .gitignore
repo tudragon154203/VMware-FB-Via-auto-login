@@ -11,3 +11,6 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.tox*
+.python-version
+.tox

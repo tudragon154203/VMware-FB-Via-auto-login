@@ -2,5 +2,36 @@
   "ToxEnv": {
     "name": "py38",
     "type": "VirtualEnvRunner"
+  },
+  "Python": {
+    "version_info": [
+      3,
+      8,
+      10,
+      "final",
+      0
+    ],
+    "executable": "/home/tudragon/.pyenv/versions/3.8.10/bin/python3.8",
+    "virtualenv version": "20.19.0"
+  },
+  "PythonRun": {
+    "deps": {
+      "options": [],
+      "requirements": [
+        "flake8==4.0.0",
+        "mypy===0.960",
+        "pytest-cov==4.0.0",
+        "pytest==7.0.0",
+        "tox==4.0.0a2"
+      ],
+      "constraints": [],
+      "constraint_options": {
+        "constrain_package_deps": false,
+        "use_frozen_constraints": false
+      }
+    }
+  },
+  "RunToxEnv": {
+    "package_deps": []
   }
 }

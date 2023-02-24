@@ -18,11 +18,11 @@
     "deps": {
       "options": [],
       "requirements": [
-        "flake8==6.0.0",
-        "mypy===1.0.1",
+        "flake8==4.0.0",
+        "mypy===0.960",
         "pytest-cov==4.0.0",
-        "pytest==7.2.1",
-        "tox==4.4.6"
+        "pytest==7.0.0",
+        "tox==4.0.0a2"
       ],
       "constraints": [],
       "constraint_options": {
