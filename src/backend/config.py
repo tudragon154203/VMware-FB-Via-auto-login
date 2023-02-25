@@ -1,10 +1,9 @@
 import json
 from collections import UserDict
 import pathlib
-from typing import Any
 
 
-class Config(UserDict[str, Any]):
+class Config(UserDict):
     """ A dictionary used for configuration
     Has save_config and load_config method
     """

@@ -1,7 +1,7 @@
 from .vm_app import VMApp
 from .config import Config
 import argparse
-from logger import Logger
+from .logger import Logger
 
 # Parser: Have one argument: config path
 parser = argparse.ArgumentParser()
