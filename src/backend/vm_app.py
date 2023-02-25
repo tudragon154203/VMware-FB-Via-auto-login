@@ -1,8 +1,8 @@
 import time
-from .config import Config
-from .virtual_machine import VirtualMachine
-from .vm_log_session import VMLogSession
-from .logger import Logger
+from backend.config import Config
+from backend.virtual_machine import VirtualMachine
+from backend.vm_log_session import VMLogSession
+from backend.logger import Logger
 import pathlib
 
 

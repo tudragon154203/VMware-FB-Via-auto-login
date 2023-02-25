@@ -1,7 +1,7 @@
-from .vm_app import VMApp
-from .config import Config
+from backend.vm_app import VMApp
+from backend.config import Config
 import argparse
-from .logger import Logger
+from backend.logger import Logger
 
 # Parser: Have one argument: config path
 parser = argparse.ArgumentParser()

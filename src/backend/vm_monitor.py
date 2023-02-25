@@ -1,6 +1,6 @@
 import subprocess
 import time
-from .virtual_machine import VirtualMachine
+from backend.virtual_machine import VirtualMachine
 
 
 class VMMonitor:

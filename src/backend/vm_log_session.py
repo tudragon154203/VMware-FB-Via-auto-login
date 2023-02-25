@@ -1,10 +1,10 @@
 from enum import Enum
-from .virtual_machine import VirtualMachine
-from .vm_monitor import VMMonitor
+from backend.virtual_machine import VirtualMachine
+from backend.vm_monitor import VMMonitor
 import time
 import subprocess
 import pathlib
-from .logger import Logger
+from backend.logger import Logger
 from datetime import date
 
 
