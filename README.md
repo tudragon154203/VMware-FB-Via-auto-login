@@ -1,4 +1,5 @@
 # Tool Tự Log Via FB qua VMWare - VMware FB Via Auto Login
+![Tests](https://github.com/tudragon154203/VMware-FB-Via-auto-login/actions/workflows/master.yml/badge.svg)
 
 *Author: Tú Dragon - group support Ngô Thành*
 
