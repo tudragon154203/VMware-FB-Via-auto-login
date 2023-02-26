@@ -2,14 +2,12 @@ name: Github_Auto_Test
 
 on:
   push:
-    branches:
-    - master
+    branches: [ "master" ]
   pull_request:
-    branches:
-    - master
+    branches: [ "master" ]
 
 jobs:
-  test:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -19,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
